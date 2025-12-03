@@ -1,8 +1,8 @@
-📘 <h1>2025-2 수강신청 AI 어시스턴트</h1>
+<h1>📘 2025-2 수강신청 AI 어시스턴트</h1>
 
 한성대학교 수강신청 책자를 자동 분석하고, 자연어 질문에 AI가 답변하는 서비스
 
-📌 <h1>프로젝트 개요</h1>
+<h1>📌 프로젝트 개요</h1>
 
 이 프로젝트는 150페이지가 넘는 수강신청 책자를 자동으로 분석하여 데이터베이스에 저장하고,
 학생들이 자연어로 질문하면 AI가 조건 기반 검색을 수행해 정확한 답변을 주는 웹 서비스입니다.
@@ -19,11 +19,11 @@
 
 이 모든 질문에 대해 LLM 기반 의도 분석 + MySQL 정확 검색으로 답변합니다.
 
-🎯 개발 동기
+<h1>🎯 개발 동기</h1>
 
 학생들이 수강신청을 할 때 겪는 불편함을 해결하기 위해 시작했습니다.
 
-문제점
+<h1>문제점</h1>
 
 📄 150+ 페이지 수강신청 책자를 학생이 직접 찾아야 함
 
@@ -34,7 +34,7 @@ ex. 화2-3M → 실제 수업시간 10:00~11:50
 
 이 문제들을 자동화하고 싶어 프로젝트를 개발했습니다.
 
-👥 역할 분담
+<h1>👥 역할 분담</h1>
 1) 데이터 구축 담당
 
 pdfplumber로 PDF 테이블 추출
@@ -55,14 +55,14 @@ Nova Lite LLM으로 질문 의도 분석(JSON 필터 생성)
 
 KB(지식기반) 보조 답변 기능 추가
 
-Flask 웹 UI 개발
+<h1>Flask 웹 UI 개발</h1>
 
 🧠 시스템 구성도
 PDF → 정제 → 텍스트 파싱 → DB 저장
 사용자 질문 → LLM Intent 분석 → DB 조건 검색 → 답변 생성
                             ↳ (보조) KB 기반 RAG 답변
 
-🔍 핵심 기능
+<h1>🔍 핵심 기능</h1>
 ✅ 1. PDF 자동 분석 & DB 저장
 
 pdfplumber로 표 데이터 추출
@@ -139,7 +139,7 @@ Frontend
 
 HTML + CSS (Flask Template)
 
-📈 기대 효과
+<h1>📈 기대 효과</h1>
 
 ⏳ 학생들의 수강신청 준비 시간을 대폭 단축
 
@@ -151,7 +151,7 @@ HTML + CSS (Flask Template)
 
 🤖 AI 기반 검색이므로 가독성과 접근성이 크게 향상
 
-🚀 프로젝트 구조
+<h1>🚀 프로젝트 구조</h1>
 project/
 │── ai.py                # LLM 의도 분석 + DB 검색 + 답변 생성
 │── app.py               # Flask 웹 서버
@@ -160,14 +160,14 @@ project/
 │── db.py                # DB 연결
 │── templates/index.html # 웹 UI
 
-테스트화면
+<h1>테스트화면</h1>
 질문: 선택필수교양 중 온라인수업(사이버 강의)이 3시간인 과목을 추천해주고 뭘 배우는지 간단히 설명해줘.
-<img width="1224" height="1450" alt="image" src="https://github.com/user-attachments/assets/0fffca12-fb3f-4687-a682-09c883dbd8b9" />
+<img width="624" height="750" alt="image" src="https://github.com/user-attachments/assets/0fffca12-fb3f-4687-a682-09c883dbd8b9" />
 질문: 웹공학트랙 중 전공기초면서 12시이전에 들을 수 있는 수업 추천해줘.
-<img width="1234" height="1100" alt="image" src="https://github.com/user-attachments/assets/d2b445e6-7c89-40dc-8ad2-359e83c5f25d" />
+<img width="634" height="650" alt="image" src="https://github.com/user-attachments/assets/d2b445e6-7c89-40dc-8ad2-359e83c5f25d" />
 
 
-📌 향후 개선점
+<h1>📌 향후 개선점</h1>
 
 UI 개선 (챗봇 스타일 인터페이스)
 
