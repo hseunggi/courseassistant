@@ -206,7 +206,7 @@ def parse_course_time(time_str: str) -> List[Dict[str, str]]:
         day_char = match.group(1)
         period_raw = match.group(2)
 
-        # 상/하반기 같은 불필요 단어 제거
+        
         period_str = period_raw.replace('상반기', '').replace('하반기', '').strip()
 
         parsed_segment = parse_time_segment(day_char, period_str)

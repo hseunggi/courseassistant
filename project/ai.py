@@ -15,6 +15,8 @@ import pymysql
 import boto3
 import json
 import re
+from dotenv import load_dotenv
+load_dotenv()
 from db import get_connection
 
 # Bedrock LLM 클라이언트
@@ -133,7 +135,7 @@ JSON ONLY:
         out = json.loads(res["body"].read())
         text = out["output"]["message"]["content"][0]["text"].strip()
 
-        # ```json ... ``` 형태로 감싸져 올 수 있으므로 제거
+        
         if text.startswith("```"):
             text = text.replace("```json", "").replace("```", "").strip()
 
@@ -145,11 +147,11 @@ JSON ONLY:
             intent = "unknown"
 
         filters = parsed.get("filters", {}) or {}
-        # 빠진 키 채워넣기
+        
         cleaned_filters = {}
         for k, default_v in DEFAULT_FILTERS.items():
             v = filters.get(k, default_v)
-            # None → "" 통일
+            
             cleaned_filters[k] = "" if v is None else str(v)
         parsed["intent"] = intent
         parsed["filters"] = cleaned_filters
@@ -158,7 +160,7 @@ JSON ONLY:
 
     except Exception as e:
         print("LLM 분석 오류:", e)
-        # LLM 실패 시 전체 질문을 keyword로 사용하는 unknown intent
+        
         return {
             "intent": "unknown",
             "filters": {
@@ -191,15 +193,15 @@ def fix_intent(intent, filters):
     kw = (filters.get("keyword") or "").replace(" ", "")
     code = (filters.get("code") or "").strip()
 
-    # 교수명이 명확히 있으면 교수→과목 intent로 고정
+    
     if prof and len(prof) >= 2:
         return "professor_to_course"
 
-    # 코드가 지정되어 있으면 필터 검색으로 고정
+    
     if code:
         return "search_by_filters"
 
-    # 그 외에는 LLM이 준 intent 그대로 사용
+    
     return intent
 
 
@@ -314,7 +316,7 @@ def search_courses(intent, filters):
                 cond.append("c.online_hours LIKE %s")
                 param.append(f"%{online_hours}%")
 
-            # ====== keyword 사용 방식 (intent에 따라 다름) ======
+            
             if kw:
                 if intent == "course_to_professor":
                     # 과목명 위주
@@ -415,10 +417,10 @@ def answer_question(question: str):
     analysis = analyze_question_with_ai(question)
     print("LLM 분석 결과:", analysis)
 
-    # intent 보정
+    
     analysis["intent"] = fix_intent(analysis["intent"], analysis["filters"])
 
-    # 요일 한글 → 영문 코드
+    
     day_val = analysis["filters"].get("day")
     if day_val in DAY_MAP:
         analysis["filters"]["day"] = DAY_MAP[day_val]
@@ -433,9 +435,9 @@ def answer_question(question: str):
 
 kb = boto3.client("bedrock-agent-runtime", region_name="us-east-1")
 
-KB_ID = "IVX0OG1VRG"  # 네가 준 KB ID
-AGENT_ID = "IVX0OG1VRG"  # 동일하게 사용 (필요 시 따로 분리 가능)
-AGENT_ALIAS_ID = "TSTALIASID"  # 기본 alias, 콘솔에서 확인 필요
+KB_ID = os.getenv("KB_ID")
+AGENT_ID = os.getenv("AGENT_ID")
+AGENT_ALIAS_ID = os.getenv("AGENT_ALIAS_ID")
 
 def answer_kb(question: str) -> str:
     """
