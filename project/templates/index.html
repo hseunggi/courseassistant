@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2025-2 수강신청 도우미</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;500;700&display=swap');
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #f7f7f7;
+        }
+        .chat-box {
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen flex items-start justify-center p-4 sm:p-8">
+    <div class="w-full max-w-3xl bg-white shadow-xl rounded-2xl p-6 sm:p-8">
+
+        <h1 class="text-3xl font-bold text-gray-800 mb-6 border-b pb-2">
+            🏛️ 2025-2 수강신청 AI 도우미
+        </h1>
+
+        <!-- DB 기반 답변 박스 -->
+        {% if db_answer %}
+        <div class="bg-blue-50 border border-blue-200 p-4 sm:p-6 rounded-xl mb-6">
+            <h2 class="text-xl font-semibold text-blue-700 mb-3 flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M9 12l2 2 4-4m5.618-4.275a1.12 1.12 0 011.236 1.458.948.948 0 00.129.232c1.472 2.112 1.472 4.93 0 7.042a.948.948 0 00-.129.232c-.085.116-.179.23-.28.337L12 20.914 4.382 13.297a7.5 7.5 0 010-10.084 1.12 1.12 0 011.236-1.458h0a1.12 1.12 0 01.996.347l.551.55a.948.948 0 00.129.232c1.472 2.112 1.472 4.93 0 7.042a.948.948 0 00-.129.232c-.085.116-.179.23-.28.337z" />
+                </svg>
+                📘 DB 기반 답변
+            </h2>
+            <div class="text-gray-700 chat-box text-base">
+                {{- db_answer }}
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- KB 기반 답변 박스 -->
+        {% if kb_answer %}
+        <div class="bg-purple-50 border border-purple-200 p-4 sm:p-6 rounded-xl mb-8">
+            <h2 class="text-xl font-semibold text-purple-700 mb-3 flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M12 20l9-5-9-5-9 5 9 5zm0-10l9-5-9-5-9 5 9 5z" />
+                </svg>
+                📙 지식기반(KB) 답변
+            </h2>
+            <div class="text-gray-700 chat-box text-base">
+                {{- kb_answer }}
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- 아무 답변 없을 때 기본 안내 -->
+        {% if not db_answer and not kb_answer %}
+        <div class="bg-blue-50 border border-blue-200 p-4 sm:p-6 rounded-xl mb-8">
+            <h2 class="text-xl font-semibold text-blue-700 mb-3">AI 답변</h2>
+            <div class="text-gray-700 text-base chat-box">
+                수강신청 관련 과목 정보에 대해 질문해주세요.<br>
+                (예: 웹공학트랙 4학년 전공필수 과목은 무엇인가요?)
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- 질문 입력 폼 -->
+        <form method="post" class="space-y-4">
+            <label for="question" class="block text-lg font-medium text-gray-700">질문 입력</label>
+            <div class="flex space-x-3">
+                <input 
+                    type="text" 
+                    id="question"
+                    name="question" 
+                    value="{{ question|default('', true) }}"
+                    placeholder="수강신청 관련 질문을 입력하세요..."
+                    required
+                    class="flex-1 p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 shadow-sm"
+                >
+                <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition duration-150 ease-in-out shadow-md hover:shadow-lg">
+                    확인
+                </button>
+            </div>
+        </form>
+
+        <p class="mt-4 text-sm text-gray-500">
+            * 답변은 데이터베이스 정보와 AWS Bedrock Knowledge Base 기록을 기반으로 제공됩니다.
+        </p>
+    </div>
+</body>
+</html>
