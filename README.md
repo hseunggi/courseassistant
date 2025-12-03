@@ -151,19 +151,13 @@ HTML + CSS (Flask Template)
 
 🤖 AI 기반 검색이므로 가독성과 접근성이 크게 향상
 
-<h1>🚀 프로젝트 구조</h1>
-project/
-│── ai.py                # LLM 의도 분석 + DB 검색 + 답변 생성
-│── app.py               # Flask 웹 서버
-│── course_parser.py     # 요일/시간(M 교시) 파싱
-│── ingest_data.py       # PDF → 데이터 추출 → DB 저장
-│── db.py                # DB 연결
-│── templates/index.html # 웹 UI
-
 <h1>테스트화면</h1>
 질문: 선택필수교양 중 온라인수업(사이버 강의)이 3시간인 과목을 추천해주고 뭘 배우는지 간단히 설명해줘.
+
 <img width="624" height="750" alt="image" src="https://github.com/user-attachments/assets/0fffca12-fb3f-4687-a682-09c883dbd8b9" />
+
 질문: 웹공학트랙 중 전공기초면서 12시이전에 들을 수 있는 수업 추천해줘.
+
 <img width="634" height="650" alt="image" src="https://github.com/user-attachments/assets/d2b445e6-7c89-40dc-8ad2-359e83c5f25d" />
 
 
